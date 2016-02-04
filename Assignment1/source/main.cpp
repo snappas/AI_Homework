@@ -14,12 +14,12 @@ int main(int argc, char **argv){
     GeneticAlgorithm geneticAlgorithm;
 
     int i = 1;
-    for(auto c : chromosomes){
+    for (auto chromosome : chromosomes) {
         cout << i << ":\t";
-        for(bool bit : c){
+        for (bool bit : chromosome) {
             cout << bit;
         }
-        cout << "\t Fitness: " << geneticAlgorithm.fitness(c);
+        cout << "\t Fitness: " << geneticAlgorithm.fitness(chromosome);
         cout << endl;
         i++;
     }
