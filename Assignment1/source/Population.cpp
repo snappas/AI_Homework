@@ -28,17 +28,46 @@ deque<vector<bool>> &Population::get() {
     return population;
 }
 
-vector<bool> Population::selectParent() {
+vector<bool> Population::selectFrontParent() {
     vector<bool> parent;
     parent = population.front();
     population.pop_front();
     return parent;
 }
 
-bool Population::insertOffspring(vector<vector<bool>> offspring) {
-    while (!offspring.empty()) {
-        population.push_back(offspring.back());
-        offspring.pop_back();
+vector<bool> Population::selectBackParent() {
+    vector<bool> parent;
+    parent = population.back();
+    population.pop_back();
+    return parent;
+}
+
+bool Population::insertFamily(vector<vector<bool>> family) {
+    while (!family.empty()) {
+        population.push_back(family.back());
+        family.pop_back();
     }
     return true;
+}
+
+bool Population::checkForGoal() {
+    for (vector<bool> chromosome : population) {
+        int i = 0;
+        for (bool bit: chromosome) {
+            if (!bit) {
+                break;
+            } else {
+                i++;
+            }
+            if (i == 10) {
+                cout << "*********SUCCESS*********" << endl;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+void Population::set(deque<vector<bool>> _population) {
+    population = _population;
 }

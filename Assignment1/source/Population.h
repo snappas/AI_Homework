@@ -2,7 +2,7 @@
 #ifndef PROJECT_GENERATEPOPULATION_H
 #define PROJECT_GENERATEPOPULATION_H
 #include <vector>
-#include <bits/stl_deque.h>
+#include <deque>
 
 using namespace std;
 class Population {
@@ -13,14 +13,18 @@ public:
 
     deque<vector<bool>> &get();
 
-    vector<bool> selectParent();
+    void set(deque<vector<bool>> _population);
 
-    bool insertOffspring(vector<vector<bool>> offspring);
+    vector<bool> selectFrontParent();
+
+    vector<bool> selectBackParent();
+
+    bool insertFamily(vector<vector<bool>> family);
+
+    bool checkForGoal();
 
 private:
     deque<vector<bool>> population;
-
-
 
 
 
