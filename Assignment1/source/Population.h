@@ -2,6 +2,7 @@
 #ifndef PROJECT_GENERATEPOPULATION_H
 #define PROJECT_GENERATEPOPULATION_H
 #include <vector>
+#include <bits/stl_deque.h>
 
 using namespace std;
 class Population {
@@ -9,10 +10,19 @@ public:
     Population() {}
     ~Population(){}
     bool generate(size_t populationSize, size_t chromosomeLength);
-    vector<vector<bool>> &get();
+
+    deque<vector<bool>> &get();
+
+    vector<bool> selectParent();
+
+    bool insertOffspring(vector<vector<bool>> offspring);
 
 private:
-    vector<vector<bool>> population;
+    deque<vector<bool>> population;
+
+
+
+
 
 };
 

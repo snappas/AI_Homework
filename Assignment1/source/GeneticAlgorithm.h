@@ -9,7 +9,10 @@ class GeneticAlgorithm {
 public:
     GeneticAlgorithm() {}
     ~GeneticAlgorithm() {}
-    int fitness(vector<bool> chromosome);
+
+    static int fitness(vector<bool> chromosome);
+
+    static vector<vector<bool>> single_crossover(vector<bool> mother, vector<bool> father);
 };
 
 

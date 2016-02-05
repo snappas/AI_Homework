@@ -1,6 +1,7 @@
 
 #include "Population.h"
 #include <random>
+#include <iostream>
 
 using namespace std;
 
@@ -23,6 +24,21 @@ bool Population::generate(size_t populationSize, size_t chromosomeLength) {
     return true;
 }
 
-vector<vector<bool>> &Population::get() {
+deque<vector<bool>> &Population::get() {
     return population;
+}
+
+vector<bool> Population::selectParent() {
+    vector<bool> parent;
+    parent = population.front();
+    population.pop_front();
+    return parent;
+}
+
+bool Population::insertOffspring(vector<vector<bool>> offspring) {
+    while (!offspring.empty()) {
+        population.push_back(offspring.back());
+        offspring.pop_back();
+    }
+    return true;
 }
