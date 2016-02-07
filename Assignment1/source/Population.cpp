@@ -6,6 +6,10 @@
 using namespace std;
 
 bool Population::generate(size_t populationSize, size_t chromosomeLength) {
+
+    //string seedValue("test");
+    //seed_seq seed(seedValue.begin(), seedValue.end());
+    //mt19937 gen(seed);
     random_device rd; //random number generator using hardware entropy
     mt19937 gen(rd()); //Mersenne Twister random number engine seeded with random device
     bernoulli_distribution dist; //Bernoulli distribution of type bool

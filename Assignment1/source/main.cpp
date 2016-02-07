@@ -13,7 +13,7 @@ int main(int argc, char **argv){
 
     size_t chromosomePopulation = 20;
     size_t chromosomeLength = 10;
-    double percentCrossOver = 0.0;
+    double percentCrossOver = 0.7;
 
     int crossOverTotal = (int) (percentCrossOver * chromosomePopulation);
 
@@ -28,14 +28,15 @@ int main(int argc, char **argv){
 
     while (!population.checkForGoal()) {
         for (int i = 0; i < crossOverTotal / 2; i++) {
-
             vector<vector<bool>> family = GeneticAlgorithm::single_crossover(population.selectFrontParent(),
                                                                              population.selectBackParent());
             population.insertFamily(family);
         }
         g++;
+        cout << "Generation " << g << " After Crossover:" << endl;
+        print_population(population.get());
         population.set(GeneticAlgorithm::mutateRandom(population.get()));
-        cout << "Generation " << g << endl;
+        cout << "Generation " << g << " After Mutation:" << endl;
         print_population(population.get());
     }
 
