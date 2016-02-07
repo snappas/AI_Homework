@@ -19,4 +19,4 @@ public:
 };
 
 
-#endif //PROJECT_GENETICALGORITHM_H
+#endif ///PROJECT_GENETICALGORITHM_H

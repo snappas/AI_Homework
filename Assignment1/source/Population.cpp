@@ -19,7 +19,7 @@ bool Population::generate(size_t populationSize, size_t chromosomeLength) {
         chromosome.reserve(chromosomeLength);
 
         for(size_t j = 0; j<chromosomeLength; j++){
-            chromosome.push_back(dist(gen)); //generate a random bool
+            chromosome.push_back(dist(gen)); ///generate a random bool
 
         }
         population.push_back(chromosome);

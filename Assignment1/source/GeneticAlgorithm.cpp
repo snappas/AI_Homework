@@ -23,7 +23,7 @@ vector<vector<bool>> GeneticAlgorithm::single_crossover(vector<bool> mother, vec
         for (int i = 0; i < mask.size(); i++) {
             if (mask[i]) { //take the bits where bitmask is 1 from the 1st parent
                 offspring.push_back(mother[i]);
-            } else { //take the bits where the bitmask is 0 from the 2nd parent
+            } else { ///take the bits where the bitmask is 0 from the 2nd parent
                 offspring.push_back(father[i]);
             }
         }
