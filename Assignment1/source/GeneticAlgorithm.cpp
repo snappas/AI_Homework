@@ -30,8 +30,8 @@ vector<vector<bool>> GeneticAlgorithm::single_crossover(vector<bool> mother, vec
         mask.flip(); //flip the bitmask for next offspring
         family.push_back(offspring);
     }
-    family.push_back(mother);
-    family.push_back(father);
+    //family.push_back(mother);
+    //family.push_back(father);
 
     return family;
 }

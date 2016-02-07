@@ -2,7 +2,7 @@
 #ifndef PROJECT_GENETICALGORITHM_H
 #define PROJECT_GENETICALGORITHM_H
 #include <vector>
-#include <bits/stl_deque.h>
+#include <deque>
 
 using namespace std;
 
