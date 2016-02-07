@@ -15,8 +15,8 @@ int GeneticAlgorithm::fitness(vector<bool> chromosome) {
 
 vector<vector<bool>> GeneticAlgorithm::single_crossover(vector<bool> mother, vector<bool> father) {
     vector<bool> mask{1, 1, 1, 1, 1, 0, 0, 0, 0, 0}; //bitmask 5x1's, 5x0's
-    vector<vector<bool>> family;
-    family.reserve(4); //2 offspring + 2 parents
+    vector<vector<bool>> children;
+    children.reserve(2); //2 offspring
     for (int child = 0; child < 2; child++) {
         vector<bool> offspring;
         offspring.reserve(10); //10 bits per chromosome
@@ -28,15 +28,16 @@ vector<vector<bool>> GeneticAlgorithm::single_crossover(vector<bool> mother, vec
             }
         }
         mask.flip(); //flip the bitmask for next offspring
-        family.push_back(offspring);
+        children.push_back(offspring);
     }
-    family.push_back(mother);
-    family.push_back(father);
 
-    return family;
+    return children;
 }
 
 deque<vector<bool>> GeneticAlgorithm::mutateRandom(deque<vector<bool>> population) {
+    //string seedValue("test");
+    //seed_seq seed(seedValue.begin(), seedValue.end());
+    //mt19937 gen(seed);
     random_device rd; //random number generator using hardware entropy
     mt19937 gen(rd()); //Mersenne Twister random number engine seeded with random device
     uniform_int_distribution<int> populationDistribution(0, (int) (population.size() - 1));
