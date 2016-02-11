@@ -35,10 +35,14 @@ int main(int argc, char **argv){
         g++;
         cout << "Generation " << g << " After Crossover:" << endl;
         print_population(population.get());
+        if(population.checkForGoal()){
+            break;
+        }
         population.set(GeneticAlgorithm::mutateRandom(population.get()));
         cout << "Generation " << g << " After Mutation:" << endl;
         print_population(population.get());
     }
+    cout << "Last generation: " << g << endl;
 
     return 0;
 }
