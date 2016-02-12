@@ -6,16 +6,19 @@
 
 using namespace std;
 
+typedef vector<bool> Chromosome;
+typedef deque<Chromosome> PopulationContainer;
+
 class GeneticAlgorithm {
 public:
     GeneticAlgorithm() {}
     ~GeneticAlgorithm() {}
 
-    static int fitness(vector<bool> chromosome);
+    static int fitness(Chromosome chromosome);
 
-    static vector<vector<bool>> single_crossover(vector<bool> mother, vector<bool> father);
+    static vector<Chromosome> single_crossover(Chromosome mother, Chromosome father, vector<bool> bitmask);
 
-    static std::deque<vector<bool>> mutateRandom(std::deque<vector<bool>> population);
+    static PopulationContainer mutateRandom(PopulationContainer population);
 };
 
 

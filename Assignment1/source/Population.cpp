@@ -5,20 +5,22 @@
 
 using namespace std;
 
-bool Population::generate(size_t populationSize, size_t chromosomeLength) {
-
-    string seedValue("test");
+/*
+ * Generate a population of random bits using a specific seed
+ * Parameters: populationSize, chromosomeLength, seed value
+ * Return: boolean
+ */
+bool Population::generate(size_t populationSize, size_t chromosomeLength, string seedValue) {
     seed_seq seed(seedValue.begin(), seedValue.end());
     mt19937 gen(seed);
     bernoulli_distribution dist; //Bernoulli distribution of type bool
 
     for(size_t i = 0; i < populationSize; i++){
-        vector<bool> chromosome;
+        Chromosome chromosome;
         chromosome.reserve(chromosomeLength);
 
         for(size_t j = 0; j<chromosomeLength; j++){
             chromosome.push_back(dist(gen)); ///generate a random bool
-
         }
         population.push_back(chromosome);
     }
@@ -26,34 +28,77 @@ bool Population::generate(size_t populationSize, size_t chromosomeLength) {
     return true;
 }
 
-deque<vector<bool>> &Population::get() {
+/*
+ * Generate a population of random bits using a random seed
+ * Parameters: populationSize, chromosomeLength
+ * Return: boolean
+ */
+bool Population::generate(size_t populationSize, size_t chromosomeLength) {
+    random_device rd;
+    mt19937 gen(rd());
+    bernoulli_distribution dist; //Bernoulli distribution of type bool
+
+    for (size_t i = 0; i < populationSize; i++) {
+        Chromosome chromosome;
+        chromosome.reserve(chromosomeLength);
+
+        for (size_t j = 0; j < chromosomeLength; j++) {
+            chromosome.push_back(dist(gen)); ///generate a random bool
+        }
+        population.push_back(chromosome);
+    }
+
+    return true;
+}
+
+/*
+ * Get the population container
+ * Return: Population container
+ */
+PopulationContainer &Population::get() {
     return population;
 }
 
-vector<bool> Population::selectFrontParent() {
-    vector<bool> parent;
+/*
+ * Get the front element of the population container and remove it
+ * Return: Population's first chromosome
+ */
+Chromosome Population::selectFrontParent() {
+    Chromosome parent;
     parent = population.front();
     population.pop_front();
     return parent;
 }
 
-vector<bool> Population::selectBackParent() {
-    vector<bool> parent;
+/*
+ * Get the back element of the population container and remove it
+ * Return: Population's last chromosome
+ */
+Chromosome Population::selectBackParent() {
+    Chromosome parent;
     parent = population.back();
     population.pop_back();
     return parent;
 }
 
-bool Population::insertFamily(vector<vector<bool>> family) {
-    while (!family.empty()) {
-        population.push_back(family.back());
-        family.pop_back();
+/*
+ * Insert a vector of chromosomes into the population
+ * Return: boolean
+ */
+bool Population::insertOffspring(vector<Chromosome> offspring) {
+    while (!offspring.empty()) {
+        population.push_back(offspring.back());
+        offspring.pop_back();
     }
     return true;
 }
 
+/*
+ * Check if the goal '1111111111' was found in the population
+ * Return: boolean
+ */
 bool Population::checkForGoal() {
-    for (vector<bool> chromosome : population) {
+    for (Chromosome chromosome : population) {
         int i = 0;
         for (bool bit: chromosome) {
             if (!bit) {
@@ -62,7 +107,6 @@ bool Population::checkForGoal() {
                 i++;
             }
             if (i == 10) {
-                cout << "*********SUCCESS*********" << endl;
                 return true;
             }
         }
@@ -70,6 +114,10 @@ bool Population::checkForGoal() {
     return false;
 }
 
-void Population::set(deque<vector<bool>> _population) {
+/*
+ * Reassign the population to a different vector of chromosomes
+ * Return: nothing
+ */
+void Population::set(PopulationContainer _population) {
     population = _population;
 }

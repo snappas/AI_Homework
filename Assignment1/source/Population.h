@@ -3,28 +3,35 @@
 #define PROJECT_GENERATEPOPULATION_H
 #include <vector>
 #include <deque>
+#include <string>
 
 using namespace std;
+
+typedef vector<bool> Chromosome;
+typedef deque<Chromosome> PopulationContainer;
+
 class Population {
 public:
     Population() {}
     ~Population(){}
     bool generate(size_t populationSize, size_t chromosomeLength);
 
-    deque<vector<bool>> &get();
+    bool generate(size_t populationSize, size_t chromosomeLength, string seedValue);
 
-    void set(deque<vector<bool>> _population);
+    PopulationContainer &get();
 
-    vector<bool> selectFrontParent();
+    void set(PopulationContainer _population);
 
-    vector<bool> selectBackParent();
+    Chromosome selectFrontParent();
 
-    bool insertFamily(vector<vector<bool>> family);
+    Chromosome selectBackParent();
+
+    bool insertOffspring(vector<Chromosome> offspring);
 
     bool checkForGoal();
 
 private:
-    deque<vector<bool>> population;
+    PopulationContainer population;
 
 
 

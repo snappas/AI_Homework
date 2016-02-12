@@ -3,7 +3,11 @@
 #include "GeneticAlgorithm.h"
 #include <random>
 
-int GeneticAlgorithm::fitness(vector<bool> chromosome) {
+/*
+ * Determine the fitness value of a chromosome
+ * Return: the number of 1s counted
+ */
+int GeneticAlgorithm::fitness(Chromosome chromosome) {
     int fit = 0;
     for(bool n : chromosome){
         if(n){
@@ -13,49 +17,52 @@ int GeneticAlgorithm::fitness(vector<bool> chromosome) {
     return fit;
 }
 
-vector<vector<bool>> GeneticAlgorithm::single_crossover(vector<bool> mother, vector<bool> father) {
-    vector<bool> mask{1, 1, 1, 1, 1, 0, 0, 0, 0, 0}; //bitmask 5x1's, 5x0's
-    vector<vector<bool>> family;
-    family.reserve(4); //2 offspring + 2 parents
-    for (int child = 0; child < 2; child++) {
-        vector<bool> offspring;
-        offspring.reserve(10); //10 bits per chromosome
-        for (int i = 0; i < mask.size(); i++) {
-            if (mask[i]) { //take the bits where bitmask is 1 from the 1st parent
-                offspring.push_back(mother[i]);
-            } else { ///take the bits where the bitmask is 0 from the 2nd parent
-                offspring.push_back(father[i]);
+/*
+ * Perform single-crossover to produce two offspring given two parents and a bitmask
+ * Parameters: parent1, parent2, bitmask
+ * Return: two siblings produced from two parents
+ */
+vector<Chromosome> GeneticAlgorithm::single_crossover(Chromosome mother, Chromosome father, vector<bool> bitmask) {
+    vector<Chromosome> siblings;
+    for (int offspring = 0; offspring < 2; offspring++) {
+        Chromosome child;
+
+        for (int i = 0; i < bitmask.size(); i++) {
+            if (bitmask[i]) {
+                //take the bits where bitmask is 1 from the 1st parent
+                child.push_back(mother[i]);
+            } else {
+                //take the bits where the bitmask is 0 from the 2nd parent
+                child.push_back(father[i]);
             }
         }
-        mask.flip(); //flip the bitmask for next offspring
-        family.push_back(offspring);
+        //flip the bitmask for the next child
+        bitmask.flip();
+        siblings.push_back(child);
     }
-    //family.push_back(mother);
-    //family.push_back(father);
 
-    return family;
+    return siblings;
 }
 
-deque<vector<bool>> GeneticAlgorithm::mutateRandom(deque<vector<bool>> population) {
+/*
+ * Select a random chromosome from the population, then select a random bit from the chromosome to flip
+ * Return: New population with mutation applied
+ */
+PopulationContainer GeneticAlgorithm::mutateRandom(PopulationContainer population) {
     random_device rd; //random number generator using hardware entropy
     mt19937 gen(rd()); //Mersenne Twister random number engine seeded with random device
     uniform_int_distribution<int> populationDistribution(0, (int) (population.size() - 1));
     uniform_int_distribution<int> bitDistribution(0, 9);
-    int selectedChromosome = populationDistribution(gen);
-    int selectedBit = bitDistribution(gen);
 
-    vector<bool> mutateChromosome = population[selectedChromosome];
-    bool mutateBit = mutateChromosome[selectedBit];
+    int populationRandomIndex = populationDistribution(gen);
+    int mutationRandomIndex = bitDistribution(gen);
 
-    if (mutateBit) {
-        mutateBit = 0;
-    } else {
-        mutateBit = 1;
-    }
+    Chromosome selectedChromosome = population[populationRandomIndex];
+    bool selectedBit = selectedChromosome[mutationRandomIndex];
 
-    mutateChromosome[selectedBit] = mutateBit;
+    selectedChromosome[mutationRandomIndex] = !selectedBit; //do the mutation
 
-    population[selectedChromosome] = mutateChromosome;
+    population[populationRandomIndex] = selectedChromosome; //replace the original chromosome with the mutated one
 
     return population;
 }
