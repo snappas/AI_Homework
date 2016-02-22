@@ -1,5 +1,9 @@
-
+/*
+ * Ryan Wedge, 0876437
+ * Jiang Li, 1234621
+*/
 #include "Population.h"
+#include "GeneticAlgorithm.h"
 #include <random>
 #include <iostream>
 
@@ -11,7 +15,7 @@ using namespace std;
  * Return: boolean
  */
 bool Population::generate(size_t populationSize, size_t chromosomeLength, string seedValue) {
-    seed_seq seed(seedValue.begin(), seedValue.end());
+    seed_seq seed(seedValue.begin(), seedValue.end()); //Use the seed value instead of random_device
     mt19937 gen(seed);
     bernoulli_distribution dist; //Bernoulli distribution of type bool
 
@@ -99,16 +103,8 @@ bool Population::insertOffspring(vector<Chromosome> offspring) {
  */
 bool Population::checkForGoal() {
     for (Chromosome chromosome : population) {
-        int i = 0;
-        for (bool bit: chromosome) {
-            if (!bit) {
-                break;
-            } else {
-                i++;
-            }
-            if (i == 10) {
-                return true;
-            }
+        if (GeneticAlgorithm::fitness(chromosome) == 10) {
+            return true;
         }
     }
     return false;

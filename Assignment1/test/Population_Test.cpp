@@ -1,3 +1,7 @@
+/*
+ * Ryan Wedge, 0876437
+ * Jiang Li, 1234621
+*/
 #include "Population.h"
 #include <cassert>
 #include <iostream>

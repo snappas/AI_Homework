@@ -1,4 +1,7 @@
-
+/*
+ * Ryan Wedge, 0876437
+ * Jiang Li, 1234621
+*/
 #ifndef PROJECT_GENETICALGORITHM_H
 #define PROJECT_GENETICALGORITHM_H
 #include <vector>
@@ -13,11 +16,8 @@ class GeneticAlgorithm {
 public:
     GeneticAlgorithm() {}
     ~GeneticAlgorithm() {}
-
     static int fitness(Chromosome chromosome);
-
     static vector<Chromosome> single_crossover(Chromosome mother, Chromosome father, vector<bool> bitmask);
-
     static PopulationContainer mutateRandom(PopulationContainer population);
 };
 
